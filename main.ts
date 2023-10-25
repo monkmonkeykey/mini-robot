@@ -34,6 +34,18 @@ function feliz () {
 input.onButtonPressed(Button.A, function () {
     feliz()
 })
+input.onButtonPressed(Button.AB, function () {
+    radio.sendString("" + (frases_amigables._pickRandom()))
+})
+radio.onReceivedString(function (receivedString) {
+    OLED12864_I2C.clear()
+    OLED12864_I2C.showString(
+    0,
+    0,
+    receivedString,
+    1
+    )
+})
 input.onButtonPressed(Button.B, function () {
     triste()
 })
@@ -60,11 +72,29 @@ function triste () {
     }
     servos.P1.setAngle(165)
 }
+input.onLogoEvent(TouchButtonEvent.Pressed, function () {
+    radio.sendString("" + (frases_amistosas._pickRandom()))
+})
+let frases_amistosas: string[] = []
+let frases_amigables: string[] = []
+let canal_radio = randint(1, 5)
 OLED12864_I2C.init(60)
 OLED12864_I2C.clear()
 OLED12864_I2C.showString(
 0,
 0,
-"Hola amigos!",
+"El canal actual es " + canal_radio,
 1
 )
+radio.setGroup(canal_radio)
+radio.sendString("hola soy Josué")
+basic.pause(2000)
+OLED12864_I2C.clear()
+OLED12864_I2C.showString(
+0,
+0,
+"hola soy Josué",
+1
+)
+frases_amigables = ["a", "b", "c"]
+frases_amistosas = ["a", "b", "c"]
