@@ -1,5 +1,5 @@
 {
-    "name": "mini robot",
+    "name": "mini robot colomba",
     "description": "",
     "dependencies": {
         "core": "*",
@@ -17,7 +17,7 @@
         "test.ts"
     ],
     "targetVersions": {
-        "target": "6.0.19",
+        "target": "6.0.22",
         "targetId": "microbit"
     },
     "supportedTargets": [

@@ -1,5 +1,15 @@
+function presenciaIntruso () {
+    if (pins.digitalReadPin(DigitalPin.P1) == 1) {
+        radio.sendString("intruso")
+        basic.showIcon(IconNames.Angry)
+        basic.pause(2000)
+        basic.clearScreen()
+    } else {
+    	
+    }
+}
 function feliz () {
-    servos.P1.setAngle(15)
+    servos.P0.setAngle(45)
     music.play(music.builtinPlayableSoundEffect(soundExpression.happy), music.PlaybackMode.InBackground)
     OLED12864_I2C.clear()
     OLED12864_I2C.zoom(true)
@@ -25,10 +35,10 @@ function feliz () {
         1
         )
     }
-    servos.P1.setAngle(165)
+    servos.P0.setAngle(135)
     for (let index = 0; index < 2; index++) {
-        servos.P1.setAngle(30)
-        servos.P1.setAngle(150)
+        servos.P0.setAngle(45)
+        servos.P0.setAngle(135)
     }
 }
 input.onButtonPressed(Button.A, function () {
@@ -38,19 +48,31 @@ input.onButtonPressed(Button.AB, function () {
     radio.sendString("" + (frases_amigables._pickRandom()))
 })
 radio.onReceivedString(function (receivedString) {
-    OLED12864_I2C.clear()
-    OLED12864_I2C.showString(
-    0,
-    0,
-    receivedString,
-    1
-    )
+    if (receivedString == "intruso") {
+        music._playDefaultBackground(music.builtInPlayableMelody(Melodies.Funeral), music.PlaybackMode.InBackground)
+        for (let index = 0; index < 4; index++) {
+            led.setBrightness(255)
+            basic.showIcon(IconNames.Angry)
+            basic.pause(500)
+            led.setBrightness(127)
+            basic.showIcon(IconNames.Angry)
+            basic.pause(500)
+        }
+    } else {
+        OLED12864_I2C.clear()
+        OLED12864_I2C.showString(
+        0,
+        0,
+        receivedString,
+        1
+        )
+    }
 })
 input.onButtonPressed(Button.B, function () {
     triste()
 })
 function triste () {
-    servos.P1.setAngle(15)
+    servos.P0.setAngle(45)
     music.play(music.builtinPlayableSoundEffect(soundExpression.sad), music.PlaybackMode.InBackground)
     OLED12864_I2C.clear()
     OLED12864_I2C.zoom(false)
@@ -70,7 +92,7 @@ function triste () {
         1
         )
     }
-    servos.P1.setAngle(165)
+    servos.P0.setAngle(135)
 }
 input.onLogoEvent(TouchButtonEvent.Pressed, function () {
     radio.sendString("" + (frases_amistosas._pickRandom()))
@@ -86,8 +108,8 @@ OLED12864_I2C.showString(
 "El canal actual es " + canal_radio,
 1
 )
-radio.setGroup(canal_radio)
-radio.sendString("hola soy Josué")
+radio.setGroup(1)
+radio.sendString("hola soy Josue")
 basic.pause(2000)
 OLED12864_I2C.clear()
 OLED12864_I2C.showString(
@@ -98,3 +120,7 @@ OLED12864_I2C.showString(
 )
 frases_amigables = ["a", "b", "c"]
 frases_amistosas = ["a", "b", "c"]
+servos.P0.setAngle(45)
+basic.forever(function () {
+    presenciaIntruso()
+})
