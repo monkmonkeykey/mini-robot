@@ -6,7 +6,8 @@
         "radio": "*",
         "microphone": "*",
         "OLED12864_I2C": "github:makecode-extensions/oled12864_i2c#v1.5.0",
-        "servo": "*"
+        "servo": "*",
+        "dfplayermini": "github:51bit/dfplayermini#v0.1.6"
     },
     "files": [
         "main.blocks",

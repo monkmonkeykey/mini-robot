@@ -49,16 +49,8 @@ input.onButtonPressed(Button.AB, function () {
 })
 radio.onReceivedString(function (receivedString) {
     if (receivedString == "intruso") {
+        dfplayermini.playFile(0, dfplayermini.isRepeat.No)
         music._playDefaultBackground(music.builtInPlayableMelody(Melodies.Funeral), music.PlaybackMode.InBackground)
-        for (let index = 0; index < 4; index++) {
-            led.setBrightness(255)
-            basic.showIcon(IconNames.Angry)
-            basic.pause(500)
-            led.setBrightness(127)
-            basic.showIcon(IconNames.Angry)
-            basic.pause(500)
-        }
-    } else {
         OLED12864_I2C.clear()
         OLED12864_I2C.showString(
         0,
@@ -66,6 +58,17 @@ radio.onReceivedString(function (receivedString) {
         receivedString,
         1
         )
+        for (let index = 0; index < 2; index++) {
+            led.setBrightness(255)
+            basic.showIcon(IconNames.Angry)
+            basic.pause(500)
+            led.setBrightness(127)
+            basic.showIcon(IconNames.Angry)
+            basic.pause(500)
+        }
+        basic.clearScreen()
+    } else {
+    	
     }
 })
 input.onButtonPressed(Button.B, function () {
@@ -100,6 +103,7 @@ input.onLogoEvent(TouchButtonEvent.Pressed, function () {
 let frases_amistosas: string[] = []
 let frases_amigables: string[] = []
 let canal_radio = randint(1, 5)
+dfplayermini.connect(SerialPin.P0, SerialPin.P2)
 OLED12864_I2C.init(60)
 OLED12864_I2C.clear()
 OLED12864_I2C.showString(
@@ -122,5 +126,5 @@ frases_amigables = ["a", "b", "c"]
 frases_amistosas = ["a", "b", "c"]
 servos.P0.setAngle(45)
 basic.forever(function () {
-    presenciaIntruso()
+	
 })
